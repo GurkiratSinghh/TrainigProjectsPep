@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Text Workspace</h2>
+
+    <div class="text-display">{% if text %}{{ text }}{% else %}<span
+            style="color: var(--text-dim); font-style: italic;">// awaiting input…</span>{% endif %}</div>
+
+    <form method="POST" class="controls" style="flex-direction: row;">
+        <input type="text" name="input_text" placeholder="// enter a word or phrase" autocomplete="off"
+            style="margin-bottom: 0; flex: 1;">
+        <button type="submit" name="command" value="add" style="margin-bottom: 0;">Append</button>
+    </form>
+
+    <div class="controls" style="margin-top: 16px;">
+        <form method="POST" style="flex: 1;">
+            <button type="submit" name="command" value="undo" class="secondary" style="width: 100%;">↩ Undo</button>
+        </form>
+        <form method="POST" style="flex: 1;">
+            <button type="submit" name="command" value="redo" class="secondary" style="width: 100%;">↪ Redo</button>
+        </form>
+        <form method="POST" style="flex: 1;">
+            <button type="submit" name="command" value="remove" class="secondary"
+                style="width: 100%; color: var(--neon-magenta); border-color: var(--neon-magenta);">✕ Drop</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

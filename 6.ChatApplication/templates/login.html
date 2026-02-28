@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversa — Sign In</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            --card: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.12);
+            --text: #f0f4f8;
+            --text-dim: rgba(240, 244, 248, 0.5);
+            --amber: #f6ad55;
+            --amber-glow: rgba(246, 173, 85, 0.3);
+            --error-bg: rgba(252, 129, 129, 0.12);
+            --error: #fc8181;
+            --radius: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 48px 40px;
+            background: var(--card);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .auth-logo .icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--amber), #ed8936);
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 24px var(--amber-glow);
+        }
+
+        .auth-logo h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .auth-logo p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .error-msg {
+            background: var(--error-bg);
+            border: 1px solid rgba(252, 129, 129, 0.25);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            color: var(--error);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+        }
+
+        .field input:focus {
+            outline: none;
+            border-color: var(--amber);
+            box-shadow: 0 0 0 3px var(--amber-glow);
+            background: rgba(255, 255, 255, 0.09);
+        }
+
+        .field input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .submit-btn {
+            margin-top: 8px;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--amber), #ed8936);
+            border: none;
+            border-radius: 12px;
+            color: #1a202c;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 16px var(--amber-glow);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--amber-glow);
+        }
+
+        .alt-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .alt-link a {
+            color: var(--amber);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .alt-link a:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-card">
+        <div class="auth-logo">
+            <div class="icon">💬</div>
+            <h2>Welcome back</h2>
+            <p>Sign in to continue your conversations</p>
+        </div>
+
+        {% if error %}
+        <div class="error-msg">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="field">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Enter your username" required autofocus
+                    autocomplete="off">
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="submit-btn">Sign In</button>
+        </form>
+
+        <div class="alt-link">
+            <a href="{{ url_for('signup_page') }}">Don't have an account? Create one →</a>
+        </div>
+    </div>
+</body>
+
+</html>

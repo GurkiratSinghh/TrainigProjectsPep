@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Student Registry</h2>
+
+    {% if message %}
+    <div class="message">{{ message }}</div>
+    {% endif %}
+
+    <form method="POST" style="margin-bottom: 24px;">
+        <input type="text" name="name" placeholder="// student identifier" required autocomplete="off">
+        <div class="controls">
+            <button type="submit" name="action" value="add" style="flex: 1;">+ Register</button>
+            <button type="submit" name="action" value="search" class="secondary" style="flex: 1;">⌕ Lookup</button>
+            <button type="submit" name="action" value="remove" class="secondary"
+                style="flex: 1; color: var(--neon-magenta); border-color: var(--neon-magenta);">✕ Remove</button>
+        </div>
+    </form>
+
+    <h3>Active Records</h3>
+
+    {% if students %}
+    <ul>
+        {% for student in students %}
+        <li>
+            <span>{{ student }}</span>
+            <span
+                style="width: 8px; height: 8px; background: var(--neon-green); border-radius: 50%; display: inline-block; box-shadow: 0 0 6px rgba(57,255,20,0.5);"></span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div
+        style="text-align: center; padding: 40px 20px; color: var(--text-dim); border: 1px dashed var(--border); border-radius: 12px;">
+        <p style="font-family: var(--font-mono); font-size: 0.85rem;">No records found</p>
+        <p style="font-size: 0.8rem; margin-top: 4px;">Register a student above to begin.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

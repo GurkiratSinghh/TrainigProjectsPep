@@ -1,0 +1,11 @@
+digraph {
+	"Ned Stark"
+	"Ned Stark" -> "Robb Stark"
+	"Robb Stark"
+	"Robb Stark" -> "Arya Stark"
+	"Arya Stark"
+	"Robb Stark" -> "Bran Stark"
+	"Bran Stark"
+	"Ned Stark" -> "Sansa Stark"
+	"Sansa Stark"
+}

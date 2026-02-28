@@ -1,0 +1,403 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-deep: #0b0e17;
+    --bg-surface: #111827;
+    --bg-card: #1a2035;
+    --bg-input: #0f1629;
+    --text-main: #e2e8f0;
+    --text-dim: #64748b;
+    --text-accent: #00e5ff;
+    --neon-cyan: #00e5ff;
+    --neon-magenta: #ff2d95;
+    --neon-green: #39ff14;
+    --neon-amber: #ffc107;
+    --glow-cyan: 0 0 20px rgba(0, 229, 255, 0.25);
+    --glow-magenta: 0 0 20px rgba(255, 45, 149, 0.25);
+    --border: rgba(100, 116, 139, 0.2);
+    --radius: 16px;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font-display);
+    background: var(--bg-deep);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Sidebar Navigation (vertical left bar) ── */
+header {
+    position: fixed;
+    left: 0; top: 0;
+    width: 72px;
+    height: 100vh;
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 0;
+    z-index: 100;
+    gap: 8px;
+}
+
+header h1 {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--neon-cyan);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    margin-bottom: 32px;
+    text-shadow: var(--glow-cyan);
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+}
+
+nav a {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+    position: relative;
+}
+
+nav a:hover {
+    color: var(--text-main);
+    background: rgba(0, 229, 255, 0.05);
+    border-color: rgba(0, 229, 255, 0.15);
+}
+
+nav a.active {
+    color: var(--neon-cyan);
+    background: rgba(0, 229, 255, 0.08);
+    border-color: rgba(0, 229, 255, 0.3);
+    box-shadow: var(--glow-cyan);
+}
+
+nav a.active::before {
+    content: '';
+    position: absolute;
+    left: -13px;
+    width: 3px;
+    height: 24px;
+    background: var(--neon-cyan);
+    border-radius: 0 4px 4px 0;
+    box-shadow: var(--glow-cyan);
+}
+
+/* ── Main Content ── */
+main {
+    margin-left: 72px;
+    flex: 1;
+    padding: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* ── Card ── */
+.card {
+    width: 100%;
+    max-width: 680px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta), var(--neon-cyan));
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* ── Typography ── */
+h2 {
+    font-family: var(--font-mono);
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-main);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h2::before {
+    content: '>';
+    color: var(--neon-cyan);
+    font-weight: 700;
+}
+
+h3 {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-top: 28px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ── Inputs ── */
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    margin-bottom: 16px;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1), var(--glow-cyan);
+}
+
+input::placeholder {
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+/* ── Buttons ── */
+button {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: linear-gradient(135deg, var(--neon-cyan), #0099cc);
+    color: var(--bg-deep);
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--glow-cyan);
+    filter: brightness(1.1);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button.secondary {
+    background: var(--bg-surface);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+}
+
+button.secondary:hover {
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+    box-shadow: none;
+}
+
+/* ── Stack / Text Display ── */
+.stack-display,
+.text-display {
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--neon-green);
+    min-height: 80px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.stack-display::before,
+.text-display::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 12px;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.stack-display::before { content: 'STACK'; }
+.text-display::before { content: 'OUTPUT'; }
+
+/* ── Controls Row ── */
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+/* ── List Items ── */
+ul {
+    list-style: none;
+    padding: 0;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+ul::-webkit-scrollbar {
+    width: 4px;
+}
+
+ul::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+li {
+    background: var(--bg-surface);
+    margin-bottom: 6px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid transparent;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    transition: all 0.15s ease;
+}
+
+li:hover {
+    border-color: var(--border);
+    background: var(--bg-card);
+}
+
+/* ── Status Message ── */
+.message {
+    padding: 12px 16px;
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--neon-cyan);
+}
+
+/* ── Welcome Grid ── */
+.tool-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+}
+
+.tool-card {
+    padding: 24px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.tool-card:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.06);
+}
+
+.tool-card h3 {
+    border: none;
+    margin: 0 0 8px 0;
+    padding: 0;
+    font-size: 0.9rem;
+    color: var(--neon-cyan);
+}
+
+.tool-card p {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    header {
+        position: fixed;
+        bottom: 0; top: auto; left: 0;
+        width: 100%;
+        height: 64px;
+        flex-direction: row;
+        justify-content: center;
+        padding: 0 16px;
+        border-right: none;
+        border-top: 1px solid var(--border);
+    }
+
+    header h1 {
+        display: none;
+    }
+
+    nav {
+        flex-direction: row;
+    }
+
+    nav a.active::before {
+        display: none;
+    }
+
+    main {
+        margin-left: 0;
+        padding: 24px 16px 80px;
+    }
+}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>Student Directory</h1>
+        <p>Manage and view all enrolled students.</p>
+    </div>
+    <a href="{{ url_for('create') }}" class="btn btn-primary">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        New Student
+    </a>
+</div>
+
+{% if not students %}
+<div class="card">
+    <div class="empty-state">
+        <div class="empty-icon">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        </div>
+        <h3>No students found</h3>
+        <p>Get started by enrolling a new student record.</p>
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>
+                        <div class="student-cell">
+                            <div class="avatar">{{ student.first_name[0] }}{{ student.last_name[0] }}</div>
+                            <div>
+                                <div class="student-name">{{ student.first_name }} {{ student.last_name }}</div>
+                                <div class="student-id">ID: #{{ student.id }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div>{{ student.email }}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-dim);">{{ student.phone or 'No phone' }}</div>
+                    </td>
+                    <td>
+                        <span class="badge badge-{{ student.status }}">{{ student.status|title }}</span>
+                    </td>
+                    <td style="text-align: right;">
+                        <a href="{{ url_for('detail', student_id=student.id) }}" class="link"
+                            style="margin-right: 12px;">View</a>
+                        <a href="{{ url_for('edit', student_id=student.id) }}" class="link"
+                            style="color: var(--text-sec);">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

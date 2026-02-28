@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversa — {{ display_name }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f2027;
+            --bg-alt: #162c36;
+            --surface: rgba(255, 255, 255, 0.06);
+            --surface-hover: rgba(255, 255, 255, 0.1);
+            --text: #f0f4f8;
+            --text-dim: rgba(240, 244, 248, 0.45);
+            --amber: #f6ad55;
+            --amber-soft: rgba(246, 173, 85, 0.15);
+            --teal: #38b2ac;
+            --teal-soft: rgba(56, 178, 172, 0.15);
+            --border: rgba(255, 255, 255, 0.08);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ── Top Bar ── */
+        .topbar {
+            height: 64px;
+            background: var(--bg-alt);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            flex-shrink: 0;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--amber), #ed8936);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .topbar-info h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .topbar-info span {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            color: var(--teal);
+            background: var(--teal-soft);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--teal);
+            box-shadow: 0 0 6px rgba(56, 178, 172, 0.5);
+        }
+
+        .logout-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 6px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .logout-link:hover {
+            color: var(--text);
+            border-color: var(--amber);
+            background: var(--amber-soft);
+        }
+
+        /* ── Messages Area ── */
+        #chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        #messages::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #messages::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            line-height: 1.65;
+            animation: msgIn 0.3s ease;
+        }
+
+        @keyframes msgIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message .meta {
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            opacity: 0.6;
+        }
+
+        .own {
+            align-self: flex-end;
+            background: linear-gradient(135deg, rgba(246, 173, 85, 0.2), rgba(237, 137, 54, 0.15));
+            border: 1px solid rgba(246, 173, 85, 0.2);
+            border-bottom-right-radius: 4px;
+        }
+
+        .own .meta {
+            color: var(--amber);
+        }
+
+        .other {
+            align-self: flex-start;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 4px;
+        }
+
+        .other .meta {
+            color: var(--teal);
+        }
+
+        /* ── Input Area ── */
+        #input-area {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            background: var(--bg-alt);
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 14px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        #message-input:focus {
+            outline: none;
+            border-color: var(--amber);
+            box-shadow: 0 0 0 3px rgba(246, 173, 85, 0.15);
+        }
+
+        #message-input::placeholder {
+            color: var(--text-dim);
+        }
+
+        #send-btn {
+            padding: 0 28px;
+            background: linear-gradient(135deg, var(--amber), #ed8936);
+            border: none;
+            border-radius: 12px;
+            color: #1a202c;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(246, 173, 85, 0.25);
+        }
+
+        #send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(246, 173, 85, 0.35);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="topbar-avatar">{{ display_name[0]|upper }}</div>
+            <div class="topbar-info">
+                <h3>{{ display_name }}</h3>
+                <span>@{{ username }}</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                Connected
+            </div>
+            <a href="{{ url_for('logout') }}" class="logout-link">Sign Out</a>
+        </div>
+    </div>
+
+    <div id="chat-container">
+        <div id="messages">
+            {% for msg in messages %}
+            <div class="message {{ 'own' if msg.sender_id == user_id else 'other' }}">
+                <span class="meta">{{ msg.sender_name }} · {{ msg.created_at }}</span>
+                {{ msg.content }}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div id="input-area">
+            <input id="message-input" type="text" placeholder="Type a message…" autocomplete="off" autofocus>
+            <button id="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const userId = "{{ user_id }}";
+        const displayName = "{{ display_name }}";
+
+        const messagesDiv = document.getElementById("messages");
+        const input = document.getElementById("message-input");
+
+        const protocol = location.protocol === "https:" ? "wss" : "ws";
+        const socket = new WebSocket(`${protocol}://${location.host}/ws/${userId}`);
+
+        socket.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+            const div = document.createElement("div");
+            const isOwn = msg.sender_id === userId;
+
+            div.className = `message ${isOwn ? "own" : "other"}`;
+            div.innerHTML = `
+                <span class="meta">${msg.sender_name} · ${new Date(msg.created_at).toLocaleTimeString()}</span>
+                ${msg.content}
+            `;
+
+            messagesDiv.appendChild(div);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        };
+
+        function sendMessage() {
+            const content = input.value.trim();
+            if (!content || socket.readyState !== WebSocket.OPEN) return;
+
+            socket.send(JSON.stringify({
+                content: content,
+                sender_name: displayName
+            }));
+
+            input.value = "";
+            input.focus();
+        }
+
+        input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") sendMessage();
+        });
+    </script>
+</body>
+
+</html>

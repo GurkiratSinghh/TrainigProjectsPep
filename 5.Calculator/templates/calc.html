@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Stack Calc</h2>
+
+    <div class="stack-display">{% if stack %}{{ stack }}{% else %}<span style="color: var(--text-dim);">[ empty
+            ]</span>{% endif %}</div>
+
+    <form method="POST" style="margin-bottom: 16px;">
+        <input type="text" name="input" placeholder="// push a number or operator (+, -, *, /)" autofocus
+            autocomplete="off">
+        <button type="submit" style="width: 100%;">Execute</button>
+    </form>
+
+    <div class="controls">
+        <form method="POST" style="flex: 1;">
+            <input type="hidden" name="action" value="calculate">
+            <button type="submit" class="secondary" style="width: 100%;">Evaluate Stack</button>
+        </form>
+        <form method="POST" style="flex: 1;">
+            <input type="hidden" name="action" value="clear">
+            <button type="submit" class="secondary"
+                style="width: 100%; border-color: var(--neon-magenta); color: var(--neon-magenta);">Flush</button>
+        </form>
+    </div>
+
+    <h3>Execution Log</h3>
+    <ul>
+        {% for item in history[::-1] %}
+        <li>
+            <span>{{ item }}</span>
+            <span style="font-size: 0.7rem; color: var(--text-dim);">✓</span>
+        </li>
+        {% else %}
+        <li
+            style="justify-content: center; color: var(--text-dim); border: 1px dashed var(--border); background: transparent;">
+            No executions yet</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

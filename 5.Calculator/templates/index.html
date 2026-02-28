@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Dashboard</h2>
+    <p style="color: var(--text-dim); margin-bottom: 28px; font-size: 0.9rem; line-height: 1.7;">
+        Choose a module from the sidebar. Each tool runs independently and is built for speed.
+    </p>
+
+    <div class="tool-grid">
+        <div class="tool-card">
+            <h3>⌘ Stack Calculator</h3>
+            <p>Reverse-order arithmetic using a stack-based approach. Push values and operators, then evaluate.</p>
+        </div>
+        <div class="tool-card">
+            <h3>✎ Text Workspace</h3>
+            <p>Composable text manipulation with full undo/redo history. Build sentences word by word.</p>
+        </div>
+        <div class="tool-card">
+            <h3>◉ Student Registry</h3>
+            <p>Lightweight student directory. Add, search, and remove records instantly.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
